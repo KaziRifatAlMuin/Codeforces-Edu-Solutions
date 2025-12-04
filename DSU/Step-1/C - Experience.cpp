@@ -6,11 +6,10 @@ const int N = 2e5 + 7;
 vector <ll> par, sum, diff, sz;
 
 ll find(ll a) {
-    ll p = par[a];
     if(par[a] == a) return a;
-    par[a] = find(p);    // recursively update parent
-    diff[a] += diff[p];  // now diff[p] is the full offset to root
-    return par[a];
+    ll root = find(par[a]); // recursion should be called first to update diff & par
+    diff[a] += diff[par[a]]; // adds all parent offset
+    return par[a] = root;
 }
 
 void merge(ll a, ll b){
